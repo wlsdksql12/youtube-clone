@@ -1,0 +1,30 @@
+{
+  "name": "youtube-clone",
+  "version": "1.0.0",
+  "description": "The best way to watch videos.",
+  "homepage": "https://github.com/wlsdksql12/youtube-clone#readme",
+  "bugs": {
+    "url": "https://github.com/wlsdksql12/youtube-clone/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wlsdksql12/youtube-clone.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --exec babel-node index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/node": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "nodemon": "^3.1.14"
+  }
+}
