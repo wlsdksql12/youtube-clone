@@ -10,6 +10,8 @@ const app = express();
 
 app.use(logger("dev"));
 
+app.set("view engine", "pug");
+app.set("views", process.cwd() + "/src/views");
 app.use("/", global);
 app.use("/video", video);
 app.use("/user", user);
