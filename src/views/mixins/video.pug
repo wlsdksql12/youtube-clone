@@ -1,0 +1,9 @@
+mixin video(video)
+        div 
+            h4=video.title
+            div
+                ul 
+                    li #{video.rating}/10.
+                    li #{video.comments} comments.
+                    li Posted #{video.createdAt}.
+                    li #{video.views} views.
