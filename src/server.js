@@ -1,4 +1,3 @@
-import "./db";
 import express from "express";
 import logger from "morgan";
 import global from "./routers/globalRouter";
@@ -22,7 +21,4 @@ app.get("/login", (req, res) => {
   return res.send("Login here.");
 });
 
-const handleServer = () =>
-  console.log(`Server listenting on port http://localhost:${PORT}`);
-
-app.listen(PORT, handleServer);
+export default app;
