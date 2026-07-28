@@ -6,3 +6,5 @@ block content
         p #{video.meta.views} #{video.meta.views < 1 ? "view" : "views"}
         small=video.createdAt
     a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete Video &rarr;
