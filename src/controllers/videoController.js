@@ -2,7 +2,7 @@ import Video, { formatHashtags } from "../models/video";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({ createdAt: "desc" });
     return res.render("home", { pageTitle: "Home", videos });
   } catch {
     return res.render("server-error");
@@ -46,7 +46,27 @@ export const postEdit = async (req, res) => {
   return res.redirect(`/video/${id}`);
 };
 
-export const search = (req, res) => res.send("Search");
+export const search = async (req, res) => {
+  const keyword = req.query.keyword;
+  let videos = [];
+  if (keyword) {
+    // videos = await Video.find({
+    //   title: {
+    //     $regex: new RegExp(keyword, "i"),
+    //   },
+    // });
+    const searchBy = (item) =>
+      Video.find({ [item]: { $regex: new RegExp(keyword, "i") } });
+
+    videos = await searchBy("title");
+
+    if (videos.length === 0) {
+      videos = await searchBy("hashtags");
+    }
+  }
+  console.log("videos", videos);
+  return res.render("search", { pageTitle: "Search", videos });
+};
 
 export const deleteVideo = async (req, res) => {
   const id = req.params.id;
