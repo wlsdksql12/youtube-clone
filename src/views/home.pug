@@ -3,10 +3,11 @@ include mixins/video
 
 block content
     h2 Welcome here you will see the trending videos
-    nav 
-        ul 
-            li 
-                a(href="/video/upload") Upload Video
+    if loggedIn
+        nav 
+            ul 
+                li 
+                    a(href="/video/upload") Upload Video
     each item in videos 
         +video(item)
     else 
