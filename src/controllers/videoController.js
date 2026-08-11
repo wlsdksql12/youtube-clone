@@ -1,4 +1,5 @@
 import Video, { formatHashtags } from "../models/video";
+import User from "../models/User";
 
 export const home = async (req, res) => {
   try {
@@ -11,7 +12,7 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const id = req.params.id;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("owner");
   if (video === null) {
     return res.render("404", { pageTitle: "Video not found." });
   }
@@ -70,6 +71,15 @@ export const search = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
   const id = req.params.id;
+  const user = req.session.user;
+  const video = await Video.findById(id);
+
+  if (!video) {
+    return res.status(404).render("404", { pageTitle: "Video not found." });
+  }
+  if (String(video.owner) !== String(user._id)) {
+    return res.status(403).redirect("/");
+  }
   await Video.findByIdAndDelete(id);
 
   return res.redirect("/");
@@ -82,13 +92,17 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
   //이곳에서 비디오를 videos array에 추가할 예정
   const { title, description, hashtags } = req.body;
+  const _id = req.session.user._id;
+  const file = req.file;
 
   // database에 저장할 두가지 방법
   // 1번째
   try {
     await Video.create({
+      fileUrl: file.path,
       title,
       description,
+      owner: _id,
       createdAt: Date.now(),
       hashtags: Video.formatHashtags(hashtags),
     });

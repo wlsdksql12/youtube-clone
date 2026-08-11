@@ -1,6 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
+import Video from "../models/video";
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
   console.log(req.body);
@@ -117,8 +118,6 @@ export const postLogin = async (req, res) => {
   res.redirect("/");
 };
 
-export const see = (req, res) => res.send("See User");
-
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
@@ -234,4 +233,20 @@ export const postChangePassword = async (req, res) => {
   console.log(findUser.password);
   req.session.user.password = findUser.password;
   return res.redirect("/");
+};
+
+export const see = async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
+
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found" });
+  }
+  const videos = await Video.find({ owner: user._id });
+  console.log(videos);
+  return res.render("profile", {
+    pageTitle: `${user.name}의 Profile`,
+    user,
+    videos,
+  });
 };
