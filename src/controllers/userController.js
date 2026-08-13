@@ -238,7 +238,7 @@ export const postChangePassword = async (req, res) => {
 export const see = async (req, res) => {
   const id = req.params.id;
   const user = await User.findById(id);
-
+  console.log("여기서 잡힘");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }

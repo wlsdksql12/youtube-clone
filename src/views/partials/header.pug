@@ -1,0 +1,22 @@
+header 
+    a(href="/")
+        i.fab.fa-youtube
+    nav 
+        ul 
+            li 
+                a(href="/search")
+                    i.fa.fa-search
+            if loggedIn 
+                li 
+                    a(href="/video/upload") Upload Video
+                li 
+                    a(href="/user/edit") Edit Profile
+                li 
+                    a(href="/user/logout") Log Out
+                li 
+                    a(href=`/user/${loggedInUser._id}`) My Profile
+            else
+                li 
+                    a(href="/login") Login
+                li 
+                    a(href="/join").header__btn Join 
