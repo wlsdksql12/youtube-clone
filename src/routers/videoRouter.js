@@ -16,15 +16,12 @@ videoRouter
   .all(protectorMiddleware)
   .get(getUpload)
   .post(videoUpload.single("video"), postUpload);
-videoRouter.get("/videos/:id", watch);
+videoRouter.get("/:id", watch);
 videoRouter
-  .route("/videos/:id/edit")
+  .route("/:id/edit")
   .all(protectorMiddleware)
   .get(getEdit)
   .post(postEdit);
-videoRouter
-  .route("/videos/:id/delete")
-  .all(protectorMiddleware)
-  .get(deleteVideo);
+videoRouter.route("/:id/delete").all(protectorMiddleware).get(deleteVideo);
 
 export default videoRouter;

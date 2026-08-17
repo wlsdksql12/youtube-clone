@@ -14,6 +14,7 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   const video = await Video.findById(id).populate("owner");
   console.log(video);
   if (video === null) {
@@ -130,4 +131,21 @@ export const postUpload = async (req, res) => {
       error_Message: error._Message,
     });
   }
+};
+
+export const registerView = async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  } else {
+    video.meta.views = video.meta.views + 1;
+    await video.save();
+    return res.sendStatus(200);
+  }
+};
+
+export const test = (req, res) => {
+  console.log("test");
 };

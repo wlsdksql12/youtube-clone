@@ -5,6 +5,7 @@ import MongoStore from "connect-mongo";
 import root from "./routers/rootRouter";
 import user from "./routers/userRouters";
 import video from "./routers/videoRouter";
+import api from "./routers/apiRouter";
 import { localsMiddleware } from "./middlewares";
 
 const PORT = 4000;
@@ -15,6 +16,7 @@ app.use(logger("dev"));
 
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -32,6 +34,7 @@ app.use("/assets", express.static("assets"));
 app.use("/", root);
 app.use("/video", video);
 app.use("/user", user);
+app.use("/api", api);
 
 app.get("/login", (req, res) => {
   return res.send("Login here.");
