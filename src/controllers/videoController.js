@@ -97,13 +97,15 @@ export const postUpload = async (req, res) => {
   //이곳에서 비디오를 videos array에 추가할 예정
   const { title, description, hashtags } = req.body;
   const _id = req.session.user._id;
-  const file = req.file;
-
+  const { video, thumb } = req.files;
+  console.log(video, thumb);
+  console.log(video[0].path, thumb[0].path);
   // database에 저장할 두가지 방법
   // 1번째
   try {
     await Video.create({
-      fileUrl: file.path,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path.replace(/[\\]/g, "/"),
       title,
       description,
       owner: _id,
